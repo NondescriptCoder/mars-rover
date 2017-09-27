@@ -12,135 +12,148 @@ public class Rover
     private int x;
     private int y;
     private int dir; // 0=North, 1=East, 2=South, 3=West
-    private int numPics;
-    private boolean isFunctional;
-    
+    private int numPics = 0;
+    private int roverDamage;
+    private int energy;
+
     // constructor(s)
     // THIS MEANS THAT IT ACCESSES UNIVERSAL RATHER THAN LOCAL
-      public Rover()
+    public Rover()
     {
         this.name = name;
         this.x = 0;
         this.y = 0;
         this.dir = 0;
-        this.numPics = 0;
-        isFunctional = true;
+        this.roverDamage = 0;
+        this.energy = 100;
+
     }
-        public Rover(String name)
+
+    public Rover(String name)
     {
         this.name = name;
         this.x = 0;
         this.y = 0;
         this.dir = 0;
-        this.numPics = 0;
-        isFunctional = true;
+        this.roverDamage = 0;
+        this.energy = 100;
     }
+
     public Rover(String name, int x, int y, int dir)
     {
         this.name = name;
         this.x = x;
         this.y = y;
         this.dir = dir;
-        isFunctional = true;
+        this.roverDamage = 0;
+        this.energy = 100;
     }
-    
+
     public void  setName(String name)
     {
         this.name = name;
     }
-    
+
     // methods - stuff the Rover can do
-    public void move()
+    
+    private void error()
     {
-        if (isFunctional)
-        {
-             if (dir == 0)
-                {
-                  y++;
-                }
-             if (dir == 1)
-                {
-                    y++;
-                    x++;
-                }
-             if (dir == 2)
-                {
-                    x++;
-                }
-             if (dir == 3)
-                {
-                    y--;
-                    x++;
-                }
-             if (dir == 4)
-                {
-                    y--;
-                }
-             if (dir == 5)
-                {
-                    y--;
-                    x--;
-                }
-             if (dir == 6)
-                {
-                    x--;
-                }
-             if (dir == 7)
-                {
-                    y++;
-                    x--;
-                }
-        System.out.println(name + " moved in direction " + dir);
+      System.out.println("UNABLE TO MOVE, CHECK BATTERY LEVEL AND SIGNS OF DAMAGE");
     }
-        if (!isFunctional)
+        
+    public void move(int distance)
+    {
+        if (roverDamage < 100 && energy > 0)
         {
-         System.out.println("Do you seriously think a broken rover can still do things?!");
+                if (dir == 0)
+                {
+                    y += distance;
+                }
+                if (dir == 1)
+                {
+                    y += distance;
+                    x += distance;
+                }
+                if (dir == 2)
+                {
+                    x += distance;
+                }
+                if (dir == 3)
+                {
+                    y -= distance;
+                    x += distance;
+                }
+                if (dir == 4)
+                {
+                    y -= distance;
+                }
+                if (dir == 5)
+                {
+                    y -= distance;
+                    x -= distance;
+                }
+                if (dir == 6)
+                {
+                    x -= distance;
+                }
+                if (dir == 7)
+                {
+                    y += distance;
+                    x -= distance;
+                }
+            System.out.println(name + " moved in direction " + dir);
+            energy -= distance;
+          
+        }
+        else
+        {
+            error();
         }
     }
     
-    public void rotateLeft() 
+    public void move() 
     {
-        if (isFunctional)
+      move(1);
+    }
+    
+    public void rotate (int distance)
+    {
+        if(roverDamage < 100 && energy > 0)
         {
-            dir -= 1;
-            
-            if (dir < 0)
+            if (distance < 0)
             {
-                dir = 7;
+                rotateLeft(distance*-1);
             }
-            
+            else
+            {
+                rotateRight(distance);
+            } 
+            energy -= Math.abs(distance);
+        }
+        else
+        {
+           error(); 
+        }
+    }
+    
+    public void rotateLeft(int distance) 
+    {
+            distance = distance%8;
+            distance = (8-distance);
+            dir += distance;      
             System.out.println(name + " turned to the left");   
     }
-        if (!isFunctional)
-        {
-         System.out.println("Do you seriously think a broken rover can still do things?!");
-        }    
-    }
-    
-    public void rotateRight()
+
+    public void rotateRight(int distance)
     {
-        if (isFunctional)
-        {
-            dir += 1;
-            
-            if (dir == 8)
-            {
-                dir = 0;
-            }
-            
+            dir += distance;
+            dir = dir%8;
             System.out.println(name + " turned to the right");    
     }
-        if (!isFunctional)
-        {
-         System.out.println("Do you seriously think a broken rover can still do things?!");
-        }    
-    }
-    
-    public void takePic()
+
+        private String getDirectionName(int dir)
     {
-        if (isFunctional){
             String direction;
-            numPics++;
             switch(dir){
                 case 0: direction = "North";
                 break;
@@ -161,21 +174,43 @@ public class Rover
                 default: direction = "Up";
                 break;
             }     
-            System.out.println("Picture taken at [" + x + ", " + y + "] to the " + direction + " by " + name);
+            return direction;
     }
-        if (!isFunctional)
+    
+    public void takePic()
+    {
+        if (roverDamage < 100 && energy > 0)
         {
-         System.out.println("Do you seriously think a broken rover can still do things?!");
+            numPics ++;
+            System.out.println("Picture taken at [" + x + ", " + y + "] to the " + getDirectionName(dir) + " by " + name);
+            energy --;
+        }
+        else
+        {
+            error();
         }    
     }
 
-    public void destroy(Rover other)
+    public void damage(Rover other)
     {
-        System.out.println(this.name + " obliterated " + other.name);
-        other.isFunctional = false;
+        if (roverDamage < 100 && energy > 0 && other.roverDamage < 100)
+        {
+            System.out.println(this.name + " damaged " + other.name);
+            int damageTaken = (int)(100.0/(1.0+(Math.sqrt(Math.pow((this.x-other.x),2))+(Math.pow((this.y-other.y),2)))));
+            other.roverDamage = other.roverDamage + damageTaken;
+        }
+        else if (roverDamage < 100 && energy > 0)
+        {
+            System.out.println("To attempt to damage that which is already broken is a foolish and fruitless endeavor,\n and you should be ashamed for attempting to pursue it");
+        }
+        else
+        {
+            error();
+        }
     }
+
     public String toString() 
     {
-        return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + dir + " picturesTaken=" +numPics+ " functional = " +isFunctional+ " ]\n";
+        return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + dir + " picturesTaken=" +numPics+ " Health= " +(100-roverDamage)+ "% Energy= " +energy+ "% ]\n";
     }
 }
