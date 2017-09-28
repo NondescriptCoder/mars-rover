@@ -140,7 +140,8 @@ public class Rover
     {
             distance = distance%8;
             distance = (8-distance);
-            dir += distance;      
+            dir += distance;
+            dir = dir%8;
             System.out.println(name + " turned to the left");   
     }
 
@@ -150,11 +151,38 @@ public class Rover
             dir = dir%8;
             System.out.println(name + " turned to the right");    
     }
-
+    
+    public void teleport(int x, int y)
+    {
+        if (roverDamage < 100 && energy > 0)
+        {
+           energy = energy - (int)(Math.sqrt(Math.pow((this.x-x), 2)+Math.pow((this.y-y),2)));
+           this.x = x;
+           this.y = y;  
+           System.out.println(name + " teleported to " +x+ ", " +y+ " ");
+        }
+        else
+        {
+            error();
+        } 
+    }
+    
+    public void setDirection(int direction)
+    {
+       dir = direction;
+       energy -= 
+    }
+    
+    public void moveTo(int x, int y)
+    {
+        
+    }
+    
         private String getDirectionName(int dir)
     {
             String direction;
-            switch(dir){
+            switch(dir)
+            {
                 case 0: direction = "North";
                 break;
                 case 1: direction = "Northeast";
@@ -183,12 +211,26 @@ public class Rover
         {
             numPics ++;
             System.out.println("Picture taken at [" + x + ", " + y + "] to the " + getDirectionName(dir) + " by " + name);
-            energy --;
+            energy -= 2;
         }
         else
         {
             error();
         }    
+    }
+    
+    public void charge(int chargeLevel)
+    {
+        energy += chargeLevel;
+        
+        if (energy > 100)
+        {
+            roverDamage += (energy-100);
+            System.out.println("WARNING: ROBOT OVERHEATING");
+            energy = 100;
+        }
+        System.out.println(name+ " CHARGED  TO " +energy+ "%");
+        
     }
 
     public void damage(Rover other)
@@ -198,10 +240,12 @@ public class Rover
             System.out.println(this.name + " damaged " + other.name);
             int damageTaken = (int)(100.0/(1.0+(Math.sqrt(Math.pow((this.x-other.x),2))+(Math.pow((this.y-other.y),2)))));
             other.roverDamage = other.roverDamage + damageTaken;
+            energy -= 3;
         }
         else if (roverDamage < 100 && energy > 0)
         {
             System.out.println("To attempt to damage that which is already broken is a foolish and fruitless endeavor,\n and you should be ashamed for attempting to pursue it");
+            energy--;
         }
         else
         {
@@ -211,6 +255,10 @@ public class Rover
 
     public String toString() 
     {
+        if (energy < 0)
+        {
+            energy = 0;
+        }
         return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + dir + " picturesTaken=" +numPics+ " Health= " +(100-roverDamage)+ "% Energy= " +energy+ "% ]\n";
     }
 }

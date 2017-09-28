@@ -7,6 +7,7 @@
  */
 public class RoverRunner
 {
+    static int x;
     public static void main(String[] arrrggggggs)
     {
         Rover r1 = new Rover("Curiosity");
@@ -25,7 +26,29 @@ public class RoverRunner
         System.out.println(r2);
         
         r1.move(100);
+        System.out.println(r1);
         
+        r1.move();
+        System.out.println(r1);
+        
+        r1.charge(75);
+        System.out.println(r1);
+        
+        r1.charge(75);
+        System.out.println(r1);
+        
+        
+        while (x < 6)
+        {
+        r3.rotate(-3);
+        r3.takePic();
+        System.out.println(r3);
+        x++;
+        }
+        
+        r2.teleport(-10, -10);
+        System.out.println(r2);
+
         
 
 }
