@@ -46,10 +46,17 @@ public class RoverRunner
         x++;
         }
         
-        r2.teleport(-10, -10);
+        r2.moveTo(-10, -10);
         System.out.println(r2);
 
+        r2.moveTo (-15, 12);
+        System.out.println(r2);
         
+        r2.moveTo(0, 0);
+        System.out.println(r2);
+        
+        r2.move(30);
+        System.out.println(r2);
 
 }
 }

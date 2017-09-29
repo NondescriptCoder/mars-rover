@@ -58,12 +58,19 @@ public class Rover
     
     private void error()
     {
-      System.out.println("UNABLE TO MOVE, CHECK BATTERY LEVEL AND SIGNS OF DAMAGE");
+      if(roverDamage < 100)
+      {
+         System.out.println("INSUFFICIENT BATTERY");
+      }
+      else
+      {
+         System.out.println("q yu64 e5d7trf89y0hunmj-kjho88tr7f568fgtvr76fR*TIFCRt689"); 
+      }
     }
         
     public void move(int distance)
     {
-        if (roverDamage < 100 && energy > 0)
+        if (roverDamage < 100 && energy > distance)
         {
                 if (dir == 0)
                 {
@@ -101,7 +108,7 @@ public class Rover
                     y += distance;
                     x -= distance;
                 }
-            System.out.println(name + " moved in direction " + dir);
+            System.out.println(name + " moved " +distance+ " units to the " + getDirectionName(dir));
             energy -= distance;
           
         }
@@ -169,13 +176,73 @@ public class Rover
     
     public void setDirection(int direction)
     {
-       dir = direction;
-       energy -= 
+        if (direction != dir)
+        {
+            if(Math.abs(direction-dir)>4)
+            {
+                direction += 8;
+            }
+           rotate(direction-dir);
+           energy -=  Math.abs(direction-dir);
+           System.out.println(name + " turned to the " + getDirectionName(dir));
+        }
     }
     
     public void moveTo(int x, int y)
     {
+        int lesserDifference;
+        if ((Math.abs(this.x-x)) < (Math.abs(this.y-y)))
+        {
+           lesserDifference = Math.abs(this.x-x);
+        }
+        else
+        {
+           lesserDifference = Math.abs(this.y-y);
+        }
         
+        while (this.x != x || this.y != y)
+        {
+            if(this.x == x && this.y < y)
+            {
+                setDirection(0);
+                move(y-this.y);
+            }
+            else if (this.x < x && this.y < y)
+            {
+                setDirection(1);
+                move(lesserDifference);
+            }
+            else if (this.x < x && this.y == y)
+            {
+                setDirection(2);
+                move(x-this.x);
+            }
+            else if (this.x < x && this.y > y)
+            {
+                setDirection(3);
+                move(lesserDifference);
+            }
+            else if (this.x == x && this.y > y)
+            {
+                setDirection(4);
+                move(this.y-y);
+            }
+            else if (this.x > x && this.y > y)
+            {
+                setDirection(5);
+                move(lesserDifference);
+            }  
+            else if (this.x > x && this.y == y)
+            {
+                setDirection(6);
+                move(this.x-x);
+            }
+            else if (this.x > x && this.y < y)
+            {
+                setDirection(7);
+                move(lesserDifference);
+            }
+        }
     }
     
         private String getDirectionName(int dir)
@@ -229,7 +296,7 @@ public class Rover
             System.out.println("WARNING: ROBOT OVERHEATING");
             energy = 100;
         }
-        System.out.println(name+ " CHARGED  TO " +energy+ "%");
+        System.out.println(name+ " charged to " +energy+ "%");
         
     }
 
