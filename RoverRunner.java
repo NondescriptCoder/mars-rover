@@ -18,45 +18,24 @@ public class RoverRunner
         r3.setName("Sojourner");
         System.out.println(r3);
         
-     
-        r2.move(3); 
+        r2.takePic();
         System.out.println(r2);
-        r2.rotate(1);
-        r2.move(2);
-        System.out.println(r2);
-        
-        r1.move(100);
-        System.out.println(r1);
         
         r1.move();
         System.out.println(r1);
-        
-        r1.charge(75);
-        System.out.println(r1);
-        
-        r1.charge(75);
-        System.out.println(r1);
-        
-        
-        while (x < 6)
-        {
-        r3.rotate(-3);
-        r3.takePic();
+        r1.damage(r3);
         System.out.println(r3);
-        x++;
-        }
+        r1.damage(r3);
+        System.out.println(r3);
+        r1.damage(r3);
+        System.out.println(r3);
         
-        r2.moveTo(-10, -10);
-        System.out.println(r2);
+        r3.move();
+        System.out.println(r3);
+        
+        //r1.moveTo(20, -17);
+        //System.out.println(r1);
 
-        r2.moveTo (-15, 12);
-        System.out.println(r2);
-        
-        r2.moveTo(0, 0);
-        System.out.println(r2);
-        
-        r2.move(30);
-        System.out.println(r2);
 
 }
 }
