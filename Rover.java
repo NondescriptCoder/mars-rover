@@ -86,12 +86,10 @@ public class Rover
       if(roverDamage < 100)
       {
          System.out.println("INSUFFICIENT BATTERY");
-         energy = 0;
       }
       else
       {
          System.out.println("q yu64 e5d7trf89y0hunmj-kjho88tr7f568fgtvr76fR*TIFCRt689"); 
-         roverDamage = 100;
       }
     }
     
@@ -267,7 +265,7 @@ public class Rover
            lesserDifference = Math.abs(this.y-y);
         }
         
-        while (this.x != x || this.y != y)
+        while ((this.x != x || this.y != y) && energy > 0 && roverDamage < 100)
         {
             if(this.x == x && this.y < y)
             {
@@ -394,7 +392,7 @@ public class Rover
             other.roverDamage = other.roverDamage + damageTaken;
             energy -= 3;
         }
-        else if (other.roverDamage > 100 && energy > 0)
+        else if (other.roverDamage >= 100 && energy > 0)
         {
             System.out.println("To attempt to damage that which is already broken is a foolish and fruitless endeavor,\n and you should be ashamed for attempting to pursue it");
             energy--;

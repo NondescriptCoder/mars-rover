@@ -25,16 +25,20 @@ public class RoverRunner
         System.out.println(r1);
         r1.damage(r3);
         System.out.println(r3);
+        System.out.println(r1);
         r1.damage(r3);
         System.out.println(r3);
+        System.out.println(r1);
         r1.damage(r3);
         System.out.println(r3);
+        
+        System.out.println(r1);
         
         r3.move();
         System.out.println(r3);
         
-        //r1.moveTo(20, -17);
-        //System.out.println(r1);
+        r1.moveTo(20, -17);
+        System.out.println(r1);
 
 
 }
