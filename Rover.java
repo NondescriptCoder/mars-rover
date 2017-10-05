@@ -75,6 +75,13 @@ public class Rover
     {
         this.name = name;
     }
+    
+    /**
+     * Gets the name  of the rover
+     */
+    public String getName() {
+        return name;
+    }
 
     // methods - stuff the Rover can do
     
