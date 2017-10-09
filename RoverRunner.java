@@ -32,19 +32,19 @@ public class RoverRunner
                 System.out.print("What do you want the rover to do?: ");
                 String  action = input.readString();
 
-                if (action.equals("w"))
+                if (action.equals("f"))
                 {
                     System.out.print ("How far?");
                     int distance = input.readInt();
                     r.move(distance);
                 }
-                else if (action.equals("d"))
+                else if (action.equals("r"))
                 {
                     System.out.print ("How far?");
                     int distance = input.readInt();
                     r.rotate(distance);
                 }
-                else if(action.equals("a"))
+                else if(action.equals("l"))
                 {
                     System.out.print ("How far?");
                     int distance = input.readInt();
@@ -70,6 +70,21 @@ public class RoverRunner
                 {
                     r.takePic();
                 }
+                else if (action.equals("c"))
+                {
+                    System.out.print ("How Much (in %)");
+                    int chargeLevel = input.readInt();
+                    r.charge(chargeLevel);
+                }
+                else if (action.equals("a"))
+                {
+                    System.out.print ("Whom would you like to attack?");
+                    
+                }
+                else
+                {
+                    System.out.println("Command Invalid");
+                }
                     
                 System.out.println(r);
             }
@@ -82,7 +97,7 @@ public class RoverRunner
                 }
                 else if(name.equals("help"))
                 {
-                    System.out.println("Rover Commands:\nw = move forward\na = turn left\nd = turn right\nt = teleport\nm = move to\np = take picture\nNon-Rover Commands:\nexit = end the program\n");
+                    System.out.println("Rover Commands:\nf = move forward\nl = turn left\nr = turn right\nt = teleport\nm = move to\np = take picture\nc= charge rover\nNon-Rover Commands:\nexit = end the program\n");
                 }                
                 else
                 {
