@@ -1,9 +1,9 @@
 
 /**
- * Write a description of class Rover here.
+ * Creates controllable rovers
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Chris Cameron
+ * @Oct. 10, 2017
  */
 public class Rover
 {
@@ -272,7 +272,7 @@ public class Rover
            lesserDifference = Math.abs(this.y-y);
         }
         
-        while ((this.x != x || this.y != y) && energy > 0 && roverDamage < 100)
+        while ((this.x != x || this.y != y) && energy > (Math.abs(this.x-x)+Math.abs(this.y-y)) + 4 && roverDamage < 100)
         {
             if(this.x == x && this.y < y)
             {
@@ -313,6 +313,10 @@ public class Rover
             {
                 setDirection(7);
                 move(lesserDifference);
+            }
+            else
+            {
+                error();
             }
         }
     }
@@ -423,6 +427,6 @@ public class Rover
         {
             roverDamage = 100;
         }
-        return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + dir + " picturesTaken=" +numPics+ " Health=" +(100-roverDamage)+ "% Energy=" +energy+ "% ]\n";
+        return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + getDirectionName(dir) + " picturesTaken=" +numPics+ " Health=" +(100-roverDamage)+ "% Energy=" +energy+ "% ]\n";
     }
 }

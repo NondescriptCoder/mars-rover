@@ -1,13 +1,15 @@
 
 /**
- * Write a description of class RoverRunner here.
+ * Runs controllable rovers
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Chris Cameron
+ * @Oct.10, 2017
  */
 public class RoverRunner
 {
-
+    /**
+     * Runs the rover
+     */
     public static void main(String[] arrrggggggs)
     {
         boolean on = true;
@@ -21,7 +23,8 @@ public class RoverRunner
         group.add(r1);
         group.add(r2);
         group.add(r3);
-
+        
+        System.out.print("Welcome, type help for more information\n");
         while (on)
         {
             System.out.print("Input Rover Name Or Non-Rover Command: ");
@@ -78,14 +81,23 @@ public class RoverRunner
                 }
                 else if (action.equals("a"))
                 {
-                    System.out.print ("Whom would you like to attack?");
-                    
+                System.out.print ("Whom would you like to attack?");
+                String victim = input.readString();
+                Rover v = group.find(victim);
+                    if (victim != null)
+                    {
+                      r.damage(v);
+                    }
+                    else
+                    {
+                        System.out.println("Rover Does Not Exist");
+                    }
                 }
                 else
                 {
                     System.out.println("Command Invalid");
                 }
-                    
+                        
                 System.out.println(r);
             }
             else
@@ -97,7 +109,7 @@ public class RoverRunner
                 }
                 else if(name.equals("help"))
                 {
-                    System.out.println("Rover Commands:\nf = move forward\nl = turn left\nr = turn right\nt = teleport\nm = move to\np = take picture\nc= charge rover\nNon-Rover Commands:\nexit = end the program\n");
+                    System.out.println("Rover Commands:\nf = move forward\nl = turn left\nr = turn right\nt = teleport\nm = move to\np = take picture\nc= charge rover\na = attack\n\nNon-Rover Commands:\nexit = end the program\n\nRovers:\nBilly\nBob\nBenjamin");
                 }                
                 else
                 {
