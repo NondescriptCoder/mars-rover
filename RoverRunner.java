@@ -87,6 +87,7 @@ public class RoverRunner
                     if (victim != null)
                     {
                       r.damage(v);
+                      System.out.println(v);
                     }
                     else
                     {
