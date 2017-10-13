@@ -16,6 +16,8 @@ public class Rover
     private int roverDamage;
     private int energy;
 
+    private static final int MAX_CHARGE = 100;
+    
     // constructor(s)
     // THIS MEANS THAT IT ACCESSES UNIVERSAL RATHER THAN LOCAL
     
@@ -78,6 +80,8 @@ public class Rover
     
     /**
      * Gets the name  of the rover
+     * 
+     * @return Returns the name of the rover
      */
     public String getName() {
         return name;
@@ -174,7 +178,7 @@ public class Rover
         {
             if (distance < 0)
             {
-                rotateLeft(distance*-1);
+                rotateLeft(-1 * distance);
             }
             else
             {
@@ -326,7 +330,7 @@ public class Rover
      * 
      * @param dir Inputs the numerical value for the rover's direction
      */
-        private String getDirectionName(int dir)
+    private String getDirectionName(int dir)
     {
             String direction;
             switch(dir)
@@ -416,6 +420,8 @@ public class Rover
     
     /**
      * Prints information about the rover
+     * 
+     * @return Returns Information about the Rover
      */
     public String toString() 
     {
