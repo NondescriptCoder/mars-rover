@@ -174,7 +174,7 @@ public class Rover
      */
     public void rotate (int distance)
     {
-        if(roverDamage < 100 && energy > 0)
+        if(roverDamage < 100 && energy >= Math.abs(distance))
         {
             if (distance < 0)
             {
@@ -276,6 +276,10 @@ public class Rover
            lesserDifference = Math.abs(this.y-y);
         }
         
+        if (!(energy > (Math.abs(this.x-x)+Math.abs(this.y-y)) + 4 && roverDamage < 100))
+        {
+            error();
+        }
         while ((this.x != x || this.y != y) && energy > (Math.abs(this.x-x)+Math.abs(this.y-y)) + 4 && roverDamage < 100)
         {
             if(this.x == x && this.y < y)
@@ -362,7 +366,7 @@ public class Rover
      */
     public void takePic()
     {
-        if (roverDamage < 100 && energy > 0)
+        if (roverDamage < 100 && energy >= 2)
         {
             numPics ++;
             System.out.println("Picture taken at [" + x + ", " + y + "] to the " + getDirectionName(dir) + " by " + name);
@@ -400,14 +404,14 @@ public class Rover
      */
     public void damage(Rover other)
     {
-        if (roverDamage < 100 && energy > 0 && other.roverDamage < 100)
+        if (roverDamage < 100 && energy >= 3 && other.roverDamage < 100)
         {
             System.out.println(this.name + " damaged " + other.name);
             int damageTaken = (int)(100.0/(1.0+(Math.sqrt(Math.pow((this.x-other.x),2))+(Math.pow((this.y-other.y),2)))));
             other.roverDamage = other.roverDamage + damageTaken;
             energy -= 3;
         }
-        else if (other.roverDamage >= 100 && energy > 0)
+        else if (other.roverDamage >= 100 && energy >= 3)
         {
             System.out.println("To attempt to damage that which is already broken is a foolish and fruitless endeavor,\n and you should be ashamed for attempting to pursue it");
             energy--;
